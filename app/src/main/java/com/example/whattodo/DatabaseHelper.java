@@ -18,8 +18,8 @@ private static final String TAG = "DatabaseHelper";
     private static final String TABLE_NAME = "adatok_table";
     private static final String COL1 = "ID";
     private static final String COL2 = "Nev";
-    private static Date COL3;
-    private static Time COL4;
+    private static final String COL3 = "Datum";
+    private static final String COL4 = "Ido";
     private static final String COL5 = "Hely";
     private static final String COL6 = "Egyeb";
 
@@ -32,7 +32,7 @@ private static final String TAG = "DatabaseHelper";
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-db.execSQL("DROP  TABLE IF EXISTS "+TABLE_NAME);
+db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
 onCreate(db);
     }
 
@@ -43,13 +43,27 @@ String createTable = "CREATE TABLE "+ TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTO
 db.execSQL(createTable);
     }
 
-    public void addData(String item,Date item2,Time item3,String item4,String item5) {
+    public String addData(String item,String item2,String item3,String item4,String item5) {
     SQLiteDatabase db = this.getWritableDatabase();
 
-      db.execSQL("INSERT INTO "+TABLE_NAME+" VALUES ('{}','{}','{}','{}','{}','{}')".format(item,item2,item3,item4,item5));
+      ContentValues cv = new ContentValues();
+      cv.put("Nev",item);
+      cv.put("Datum", item2);
+      cv.put("Ido", item3);
+      cv.put("Hely",item4);
+      cv.put("Egyeb",item5);
+     long res = db.insert(TABLE_NAME,null,cv);
+     if (res==-1){ return"FAIL";}
+     else {return "OK";}
 
 
+    }
+    public Cursor Teszt()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+      Cursor data = db.rawQuery("SELECT Nev FROM "+TABLE_NAME+" WHERE ID LIKE 1",null);
+      return data;
     }
 }
 
