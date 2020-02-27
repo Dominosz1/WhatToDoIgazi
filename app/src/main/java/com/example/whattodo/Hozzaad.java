@@ -49,7 +49,7 @@ private String nev;
                     editText4.setText("");
                     editText5.setText("");
 
-nev = mAdat.Teszt().getString(0);
+nev = mAdat.Teszt().getString(1);
                     openAc1();
 
                 } else {
@@ -66,7 +66,7 @@ openAc1();
     private void openAc1() {
         Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("kurzor",nev);
-        intent.putExtra("igaz",true);
+
         startActivity(intent);
 
     }

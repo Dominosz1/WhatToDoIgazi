@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 private Button button;
-private String fill ="dolog";
+
 
 private TextView tv;
 
@@ -20,8 +20,6 @@ private TextView tv;
         setContentView(R.layout.activity_main);
         button = findViewById(R.id.btnAdd);
 
-        tv = findViewById(R.id.editText2);
-tv.setText(fill);
     }
     public void OpenHozzaad(View view){
         openAct2();
@@ -33,4 +31,9 @@ tv.setText(fill);
         startActivity(intent);
 
     }
+private void OpenTeszt(View view){
+    Intent intent = new Intent(this,Teszt.class);
+    intent.putExtra("nevT",getIntent().getExtras().getString("kurzor"));
+    startActivity(intent);
+}
 }
