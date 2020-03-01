@@ -58,13 +58,13 @@ db.execSQL(createTable);
 
 
     }
-    public Cursor Teszt()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-      Cursor data = db.rawQuery("SELECT Nev FROM "+TABLE_NAME+" WHERE ID LIKE 1",null);
-      return data;
-    }
+  public Cursor AdatBetolt()
+  {
+      SQLiteDatabase db = this.getReadableDatabase();
+      String query = "SELECT * FROM "+TABLE_NAME;
+      Cursor kurzor = db.rawQuery(query,null);
+      return  kurzor;
+  }
 }
 
 

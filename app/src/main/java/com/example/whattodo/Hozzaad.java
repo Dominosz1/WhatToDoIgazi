@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Date;
 import java.sql.Time;
-
+import java.util.Date;
+import java.util.Calendar;
 public class Hozzaad extends AppCompatActivity {
     DatabaseHelper mAdat;
 private Button btnAdd;
@@ -22,6 +22,7 @@ private EditText editText1;
     private EditText editText4;
     private EditText editText5;
     private TextView tv;
+    Date currentTime = Calendar.getInstance().getTime();
 private String nev;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ private String nev;
         editText4 = findViewById(R.id.editText4);
         editText5 = findViewById(R.id.editText5);
         tv=findViewById(R.id.textView);
-
+editText3.setText(currentTime.toString());
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +50,7 @@ private String nev;
                     editText4.setText("");
                     editText5.setText("");
 
-nev = mAdat.Teszt().getString(1);
+
                     openAc1();
 
                 } else {

@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     tools:visibility="visible">
 
+
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="409dp"
-        android:layout_height="369dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="290dp"
-        android:layout_marginEnd="33dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="52dp"
+        android:keepScreenOn="true"
         android:onClick="OpenHozzaad"
-        android:text="@string/gomb"
-        app:layout_constraintBottom_toBottomOf="@id/calendarView"
-        app:layout_constraintEnd_toEndOf="@id/calendarView"
-        app:layout_constraintStart_toStartOf="@id/calendarView"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible" />
 
-    <Button
-        android:id="@+id/buttonteszt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:onClick="OpenTeszt"/>
+    <ListView
+        android:id="@+id/lvAdatok"
+        android:layout_width="414dp"
+        android:layout_height="216dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
