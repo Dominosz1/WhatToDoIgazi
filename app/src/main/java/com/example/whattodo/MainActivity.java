@@ -19,12 +19,15 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 private ArrayList<String> eventek;
+    private ArrayList<Integer> eventekID;
 private ArrayAdapter adapter;
 private TextView tv;
 private DatabaseHelper db;
 private Button button;
 private CalendarView cv;
 private ListView lv;
+private String kivEvent;
+private int eventID;
 private String datum = Calendar.getInstance().getTime().getYear()+"-"+Calendar.getInstance().getTime().getMonth()+"-"+Calendar.getInstance().getTime().getDay();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +38,20 @@ private String datum = Calendar.getInstance().getTime().getYear()+"-"+Calendar.g
         lv = findViewById(R.id.lvAdatok);
 cv = findViewById(R.id.calendarView);
         eventek = new ArrayList<>();
+        eventekID = new ArrayList<>();
         viewData();
 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-String text = lv.getItemAtPosition(position).toString();
-Toast.makeText(MainActivity.this,""+text,Toast.LENGTH_SHORT).show();
+ kivEvent = lv.getItemAtPosition(position).toString();
+
+for(int i =0;i<eventek.size();i++){
+    if(eventek.get(i).equals(kivEvent)){
+        eventID=eventekID.get(i);
+    }
+}
+
+OpenActEvInfo();
     }
 });
 cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -60,11 +71,13 @@ cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
         Cursor kurzor = db.AdatBetolt(datum);
         if(kurzor.getCount()==0){
 
-            Toast.makeText(this,"No Data",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Nincs adat",Toast.LENGTH_SHORT).show();
         }
         else {
             while (kurzor.moveToNext()) {
+                eventekID.add(kurzor.getInt(0));
                 eventek.add(kurzor.getString(1));
+
             }
 
         }
@@ -83,5 +96,9 @@ lv.setAdapter(adapter);
         startActivity(intent);
 
     }
-
+private void OpenActEvInfo(){
+        Intent intent = new Intent(this,EventInfo.class);
+        intent.putExtra("ID",eventID);
+        startActivity(intent);
+}
 }

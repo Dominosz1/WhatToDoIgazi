@@ -65,6 +65,17 @@ db.execSQL(createTable);
       Cursor kurzor = db.rawQuery(query,null);
       return  kurzor;
   }
+  public Cursor EventInfo(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+    String query = "SELECT * FROM "+TABLE_NAME+" WHERE ID = "+id;
+    Cursor kurzor = db.rawQuery(query,null);
+      return  kurzor;
+    }
+    public void Delete(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+       db.delete(TABLE_NAME,"ID = ?",new String[]{String.valueOf(id)});
+
+    }
 }
 
 
