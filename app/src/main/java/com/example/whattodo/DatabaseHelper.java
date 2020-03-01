@@ -58,10 +58,10 @@ db.execSQL(createTable);
 
 
     }
-  public Cursor AdatBetolt()
+  public Cursor AdatBetolt(String datum)
   {
       SQLiteDatabase db = this.getReadableDatabase();
-      String query = "SELECT * FROM "+TABLE_NAME;
+      String query = "SELECT * FROM "+TABLE_NAME+" WHERE "+COL3+" = '"+datum+"'";
       Cursor kurzor = db.rawQuery(query,null);
       return  kurzor;
   }

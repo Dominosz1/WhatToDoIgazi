@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 private ArrayList<String> eventek;
@@ -24,7 +25,7 @@ private DatabaseHelper db;
 private Button button;
 private CalendarView cv;
 private ListView lv;
-private String datum;
+private String datum = Calendar.getInstance().getTime().getYear()+"-"+Calendar.getInstance().getTime().getMonth()+"-"+Calendar.getInstance().getTime().getDay();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,10 @@ Toast.makeText(MainActivity.this,""+text,Toast.LENGTH_SHORT).show();
 cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
     @Override
     public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-        datum = year+"-"+month+"-"+dayOfMonth;
+        datum = year+"-"+(month+1)+"-"+dayOfMonth;
+        eventek.clear();
+        lv.setAdapter(null);
+        viewData();
     }
 });
 
@@ -53,7 +57,7 @@ cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
     }
 
     private void viewData() {
-        Cursor kurzor = db.AdatBetolt();
+        Cursor kurzor = db.AdatBetolt(datum);
         if(kurzor.getCount()==0){
 
             Toast.makeText(this,"No Data",Toast.LENGTH_SHORT).show();
