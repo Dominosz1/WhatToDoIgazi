@@ -22,7 +22,7 @@ private EditText editText1;
     private EditText editText4;
     private EditText editText5;
     private TextView tv;
-    Date currentTime = Calendar.getInstance().getTime();
+
 private String nev;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +36,15 @@ private String nev;
         editText3 = findViewById(R.id.editText3);
         editText4 = findViewById(R.id.editText4);
         editText5 = findViewById(R.id.editText5);
-        tv=findViewById(R.id.textView);
-editText3.setText(currentTime.toString());
+       editText2.setText(getIntent().getExtras().getString("Naptar"));
+editText3.setText(currentTime());
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (editText1.length() != 0) {
                    mAdat.addData(editText1.getText().toString(),editText2.getText().toString(),editText3.getText().toString(),editText4.getText().toString(),editText5.getText().toString());
-                    editText1.setText("");
+
                     editText2.setText("");
                     editText3.setText("");
                     editText4.setText("");
@@ -66,11 +66,29 @@ openAc1();
 
     private void openAc1() {
         Intent intent = new Intent(this,MainActivity.class);
-        intent.putExtra("kurzor",nev);
+
 
         startActivity(intent);
 
     }
-
+private String currentTime(){
+        String ora;
+        String perc;
+        String ct;
+        if(Calendar.getInstance().getTime().getHours()<10 && Calendar.getInstance().getTime().getHours()!=0 && Calendar.getInstance().getTime().getHours()!=00 ){
+            ora = "0"+Calendar.getInstance().getTime().getHours();
+        }
+        else{
+            ora = String.valueOf(Calendar.getInstance().getTime().getHours());
+        }
+    if(Calendar.getInstance().getTime().getMinutes()<10 && Calendar.getInstance().getTime().getMinutes()!=0 && Calendar.getInstance().getTime().getMinutes()!=00 ){
+        perc = "0"+Calendar.getInstance().getTime().getMinutes();
+    }
+    else{
+        perc = String.valueOf(Calendar.getInstance().getTime().getMinutes());
+    }
+ct = ora+":"+perc;
+    return ct;
+}
 
 }
