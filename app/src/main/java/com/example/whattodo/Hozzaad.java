@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 public class Hozzaad extends AppCompatActivity {
@@ -72,22 +74,10 @@ openAc1();
 
     }
 private String currentTime(){
-        String ora;
-        String perc;
-        String ct;
-        if(Calendar.getInstance().getTime().getHours()<10 && Calendar.getInstance().getTime().getHours()!=0 && Calendar.getInstance().getTime().getHours()!=00 ){
-            ora = "0"+Calendar.getInstance().getTime().getHours();
-        }
-        else{
-            ora = String.valueOf(Calendar.getInstance().getTime().getHours());
-        }
-    if(Calendar.getInstance().getTime().getMinutes()<10 && Calendar.getInstance().getTime().getMinutes()!=0 && Calendar.getInstance().getTime().getMinutes()!=00 ){
-        perc = "0"+Calendar.getInstance().getTime().getMinutes();
-    }
-    else{
-        perc = String.valueOf(Calendar.getInstance().getTime().getMinutes());
-    }
-ct = ora+":"+perc;
+     DateFormat dateFormat = new SimpleDateFormat("hh:mm");
+     Date cal = Calendar.getInstance().getTime();
+    String ct = dateFormat.format(cal);
+
     return ct;
 }
 

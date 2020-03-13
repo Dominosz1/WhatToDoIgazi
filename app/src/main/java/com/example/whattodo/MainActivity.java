@@ -14,8 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 private ArrayList<String> eventek;
@@ -28,7 +32,11 @@ private CalendarView cv;
 private ListView lv;
 private String kivEvent;
 private int eventID;
-private String datum = Calendar.getInstance().getTime().getYear()+"-"+Calendar.getInstance().getTime().getMonth()+"-"+Calendar.getInstance().getTime().getDay();
+private EventNotification notification;
+//private String datum = Calendar.getInstance().getTime().getYear()+"-"+Calendar.getInstance().getTime().getMonth()+"-"+Calendar.getInstance().getTime().getDay();
+private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+private Date cal = Calendar.getInstance().getTime();
+private String datum = dateFormat.format(cal);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
