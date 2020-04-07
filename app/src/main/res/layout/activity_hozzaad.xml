@@ -26,6 +26,7 @@
         android:layout_height="49dp"
         android:layout_marginTop="156dp"
         android:autofillHints=""
+        android:editable="false"
         android:ems="10"
         android:hint="2000.01.01."
         android:inputType="date"
@@ -60,9 +61,10 @@
         android:layout_height="149dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="364dp"
+        android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Egyéb info"
+        android:hint="@string/egy_b_info"
         android:inputType="textMultiLine"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -71,10 +73,25 @@
         android:id="@+id/btnOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="44dp"
+        android:layout_marginBottom="153dp"
         android:text="@android:string/ok"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+
+    <Button
+        android:id="@+id/btnAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginBottom="152dp"
+        android:onClick="setAlarm"
+        android:text="@string/rtes_t_s_id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

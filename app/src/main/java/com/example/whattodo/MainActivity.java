@@ -1,7 +1,10 @@
 package com.example.whattodo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,21 +28,27 @@ public class MainActivity extends AppCompatActivity {
 private ArrayList<String> eventek;
     private ArrayList<Integer> eventekID;
 private ArrayAdapter adapter;
-private TextView tv;
+
 private DatabaseHelper db;
 private Button button;
 private CalendarView cv;
 private ListView lv;
 private String kivEvent;
 private int eventID;
-private EventNotification notification;
+private int alarmID = 0;
+public boolean belepve = false;
 //private String datum = Calendar.getInstance().getTime().getYear()+"-"+Calendar.getInstance().getTime().getMonth()+"-"+Calendar.getInstance().getTime().getDay();
-private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 private Date cal = Calendar.getInstance().getTime();
 private String datum = dateFormat.format(cal);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Belepes();
+        belepve = true;
         db = new DatabaseHelper(this);
         setContentView(R.layout.activity_main);
         button = findViewById(R.id.btnAdd);
@@ -65,7 +74,10 @@ OpenActEvInfo();
 cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
     @Override
     public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-        datum = year+"-"+(month+1)+"-"+dayOfMonth;
+        String honap;
+        if((month+1)<10)   honap =("0"+(month+1));
+        else honap = String.valueOf(month+1);
+        datum = year+"-"+honap+"-"+dayOfMonth;
         eventek.clear();
         lv.setAdapter(null);
         viewData();
@@ -79,7 +91,7 @@ cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
         Cursor kurzor = db.AdatBetolt(datum);
         if(kurzor.getCount()==0){
 
-            Toast.makeText(this,"Nincs adat",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,String.valueOf(belepve),Toast.LENGTH_SHORT).show();
         }
         else {
             while (kurzor.moveToNext()) {
@@ -101,6 +113,8 @@ lv.setAdapter(adapter);
     private void openAct2() {
         Intent intent = new Intent(this,Hozzaad.class);
         intent.putExtra("Naptar",datum);
+        intent.putExtra("AlarmID",alarmID);
+        alarmID = alarmID + 1;
         startActivity(intent);
 
     }
@@ -109,4 +123,22 @@ private void OpenActEvInfo(){
         intent.putExtra("ID",eventID);
         startActivity(intent);
 }
+private void Belepes()
+{
+    if(!belepve)
+    {
+
+        Intent intent = new Intent(this,Login.class);
+
+        startActivity(intent);
+    }
+
+    }
+    public void Kilepes(View view){
+        belepve = false;
+        Belepes();
+    }
+
+
 }
+

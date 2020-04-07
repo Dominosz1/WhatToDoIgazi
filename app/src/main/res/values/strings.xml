@@ -18,4 +18,6 @@
 
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
+    <string name="rtes_t_s_id">Értesítés idő</string>
+    <string name="egy_b_info">Egyéb info</string>
 </resources>
