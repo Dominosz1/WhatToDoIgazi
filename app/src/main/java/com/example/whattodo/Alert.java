@@ -13,7 +13,7 @@ public class Alert extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String cim = intent.getExtras().getString("cim");
-        String szoveg = intent.getExtras().getString("szoveg");
+        String szoveg = "Ön éresítést állítot erre az időpontra ezen a címen";
         notificationManager = NotificationManagerCompat.from(context);
         Notification notification = new NotificationCompat.Builder(context,App.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_date_range_black_24dp)
@@ -22,6 +22,6 @@ public class Alert extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .build();
-        notificationManager.notify(1,notification);
+        notificationManager.notify(MainActivity.alarmID,notification);
     }
 }

@@ -24,14 +24,14 @@ import java.util.Date;
 import java.util.Calendar;
 public class Hozzaad extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     DatabaseHelper mAdat;
-private Button btnAdd;
-private EditText editText1;
+    private Button btnAdd;
+    private EditText editText1;
     private EditText editText2;
     private EditText editText3;
     private EditText editText4;
     private EditText editText5;
     private AlarmManager alarmManager;
-
+     private Calendar c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,25 +44,28 @@ private EditText editText1;
         editText3 = findViewById(R.id.editText3);
         editText4 = findViewById(R.id.editText4);
         editText5 = findViewById(R.id.editText5);
-       editText2.setText(getIntent().getExtras().getString("Naptar"));
-editText3.setText(currentTime());
+        editText2.setText(getIntent().getExtras().getString("Naptar"));
+        editText3.setText(currentTime());
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (editText1.length() != 0) {
-                   mAdat.addData(editText1.getText().toString(),editText2.getText().toString(),editText3.getText().toString(),editText4.getText().toString(),editText5.getText().toString());
+                    try {
+                    mAdat.addData(editText1.getText().toString(),editText2.getText().toString(),editText3.getText().toString(),editText4.getText().toString(),editText5.getText().toString(),String.valueOf(MainActivity.alarmID));
 
                     editText2.setText("");
                     editText3.setText("");
                     editText4.setText("");
                     editText5.setText("");
 
+                        startAlarm(c);
+                    }catch (Exception e){ }
 
                     openAc1();
 
                 } else {
-openAc1();
+                    openAc1();
                 }
 
 
@@ -78,29 +81,29 @@ openAc1();
         startActivity(intent);
 
     }
-private String currentTime(){
-     DateFormat dateFormat = new SimpleDateFormat("hh:mm");
-     Date cal = Calendar.getInstance().getTime();
-    String ct = dateFormat.format(cal);
+    private String currentTime(){
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        Date cal = Calendar.getInstance().getTime();
+        String ct = dateFormat.format(cal);
 
-    return ct;
-}
-public void setAlarm(View view){
-    DialogFragment timePicker = new TimePickerFragment();
-            timePicker.show(getSupportFragmentManager(),"time picker");
-}
+        return ct;
+    }
+    public void setAlarm(View view){
+        DialogFragment timePicker = new TimePickerFragment();
+        timePicker.show(getSupportFragmentManager(),"time picker");
+    }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-String[] date = editText2.getText().toString().split("-");
-Calendar c = Calendar.getInstance();
-c.set(Calendar.YEAR,Integer.parseInt(date[0]));
-c.set(Calendar.MONTH,Integer.parseInt(honap(date[1])));
-c.set(Calendar.DAY_OF_MONTH,Integer.parseInt(date[2]));
-c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-c.set(Calendar.MINUTE,minute);
-c.set(Calendar.SECOND,0);
-startAlarm(c);
+        String[] date = editText2.getText().toString().split("-");
+        c = Calendar.getInstance();
+        c.set(Calendar.YEAR,Integer.parseInt(date[0]));
+        c.set(Calendar.MONTH,honap(date[1]));
+        c.set(Calendar.DAY_OF_MONTH,Integer.parseInt(date[2]));
+        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+        c.set(Calendar.MINUTE,minute);
+        c.set(Calendar.SECOND,0);
+
     }
     private void startAlarm(Calendar c)
     {
@@ -109,17 +112,22 @@ startAlarm(c);
         if(alarmManager == null) {
             alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         }
-        Intent intent = new Intent(this,Alert.class);
+        Intent intent = new Intent(getApplicationContext(),Alert.class);
         intent.putExtra("cim",editText1.getText().toString());
         intent.putExtra("szoveg",editText5.getText().toString());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,getIntent().getExtras().getInt("alarmID"),intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),MainActivity.alarmID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pendingIntent);
-    b.setEnabled(false);
+        b.setEnabled(false);
     }
-    private String honap(String d){
+    private int honap(String d){
         if(d.startsWith("0") == true){
-           return d.substring(1);
+            int honapsz = Integer.parseInt(d.substring(1));
+            return honapsz-1;
         }
-        else return d;
+        else return Integer.parseInt(d)-1;
+    }
+    private void hiba(Exception e)
+    {
+        Toast.makeText(this,""+e,Toast.LENGTH_SHORT).show();
     }
 }

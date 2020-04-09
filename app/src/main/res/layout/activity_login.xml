@@ -59,10 +59,12 @@
         android:layout_height="56dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="94dp"
+        android:layout_marginEnd="25dp"
+        android:onClick="belepesCheck"
         android:text="Belépés"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText8"
-        android:onClick="belepesCheck"/>
+        app:layout_constraintTop_toBottomOf="@+id/editText8" />
 
     <Button
         android:id="@+id/button2"
@@ -70,8 +72,10 @@
         android:layout_height="59dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:onClick="openRegisztracio"
         android:text="Regisztráció"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        android:onClick="openRegisztracio"/>
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,6 +18,12 @@ private ArrayList<String> Emailek;
 private ArrayList<String> Jelszavak;
 private EditText Email;
 private EditText Jelszo;
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +37,7 @@ private EditText Jelszo;
             viewData();
         }catch (Exception e){}
     }
-    private void viewData() {
+    private void viewData() {//bejelentkezési adatok betöltése
         Cursor kurzor = db.AdatBetolt();
         if (kurzor.getCount() == 0) {
 
@@ -49,11 +55,12 @@ private EditText Jelszo;
         Intent intent = new Intent(this,Registration.class);
         startActivity(intent);
     }
-    public void belepesCheck(View view){
+    public void belepesCheck(View view){//beléptetés
     for (int i =0;i<Emailek.size();i++){
         if(Emailek.get(i).equals(Email.getText().toString())){
             if(Jelszavak.get(i).equals(Jelszo.getText().toString()))
             {
+                MainActivity.belepve = true;
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
             }

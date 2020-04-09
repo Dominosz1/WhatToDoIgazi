@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.regex.Pattern;
 
 public class Registration extends AppCompatActivity {
 private EditText Nev;
@@ -22,22 +25,24 @@ private UserDatabaseHelper mAdat;
         mAdat = new UserDatabaseHelper(this);
     }
     public void Regisztracio(View view) {
-        if (Nev.length() != 0 && Email.length() != 0 && Jelszo.length() != 0) {
-            mAdat.addData(Nev.getText().toString(),Email.getText().toString(),Jelszo.getText().toString());
+        try {
+            if (Validacio(Email.getText().toString())) {
+                if (Nev.length() != 0 && Email.length() != 0 && Jelszo.length() != 0) {
+                    mAdat.addData(Nev.getText().toString(), Email.getText().toString(), Jelszo.getText().toString());
 
-            Nev.setText("");
-            Email.setText("");
-            Jelszo.setText("");
+                    Nev.setText("");
+                    Email.setText("");
+                    Jelszo.setText("");
 
 
+                    LoginScreen();
 
-            LoginScreen();
-
-        } else {
-            LoginScreen();
-        }
+                } else {
+                    LoginScreen();
+                }
+            } else Toast.makeText(this, "Hibás E-mail formátum", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {Toast.makeText(this, "Nem várt hiba történt. Próbálkozz újra!", Toast.LENGTH_SHORT).show();}
     }
-
     public void LoginScreen()
     {
         Intent intent = new Intent(this,Login.class);
@@ -47,5 +52,17 @@ private UserDatabaseHelper mAdat;
     {
         Intent intent = new Intent(this,Login.class);
         startActivity(intent);
+    }
+    public static boolean Validacio(String email)
+    {
+        String emailformat = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailformat);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 }

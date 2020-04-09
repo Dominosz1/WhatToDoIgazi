@@ -10,8 +10,6 @@ import  android.database.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // fields
-
 private static final String TAG = "DatabaseHelper";
     private static final String TABLE_NAME = "adatok_table";
     private static final String COL1 = "ID";
@@ -20,10 +18,10 @@ private static final String TAG = "DatabaseHelper";
     private static final String COL4 = "Ido";
     private static final String COL5 = "Hely";
     private static final String COL6 = "Egyeb";
+    private static final String COL7 = "alarmAZ";
 
 
 
-    // constructors
     public DatabaseHelper(Context context) {
         super(context, TABLE_NAME, null,1);
     }
@@ -37,11 +35,11 @@ onCreate(db);
     @Override
     public void onCreate(SQLiteDatabase db) {
 String createTable = "CREATE TABLE "+ TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, "+
-        COL2 + " TEXT, "+COL3+" DATE, "+COL4+" TIME, "+COL5+" TEXT, "+COL6+" TEXT)";
+        COL2 + " TEXT, "+COL3+" DATE, "+COL4+" TIME, "+COL5+" TEXT, "+COL6+" TEXT, "+COL7+" TEXT)";
 db.execSQL(createTable);
     }
 
-    public String addData(String item,String item2,String item3,String item4,String item5) {
+    public String addData(String item,String item2,String item3,String item4,String item5,String item6) {
     SQLiteDatabase db = this.getWritableDatabase();
 
       ContentValues cv = new ContentValues();
@@ -50,6 +48,7 @@ db.execSQL(createTable);
       cv.put("Ido", item3);
       cv.put("Hely",item4);
       cv.put("Egyeb",item5);
+      cv.put("alarmAZ",item6);
      long res = db.insert(TABLE_NAME,null,cv);
      if (res==-1){ return"FAIL";}
      else {return "OK";}

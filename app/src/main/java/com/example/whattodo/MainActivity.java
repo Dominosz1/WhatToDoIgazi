@@ -26,7 +26,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 private ArrayList<String> eventek;
-    private ArrayList<Integer> eventekID;
+private ArrayList<Integer> eventekID;
 private ArrayAdapter adapter;
 
 private DatabaseHelper db;
@@ -35,8 +35,8 @@ private CalendarView cv;
 private ListView lv;
 private String kivEvent;
 private int eventID;
-private int alarmID = 0;
-public boolean belepve = false;
+public static int alarmID = 0;
+public static boolean belepve = false;
 //private String datum = Calendar.getInstance().getTime().getYear()+"-"+Calendar.getInstance().getTime().getMonth()+"-"+Calendar.getInstance().getTime().getDay();
 private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 private Date cal = Calendar.getInstance().getTime();
@@ -47,8 +47,9 @@ private String datum = dateFormat.format(cal);
         super.onCreate(savedInstanceState);
 
 
-        Belepes();
-        belepve = true;
+
+
+
         db = new DatabaseHelper(this);
         setContentView(R.layout.activity_main);
         button = findViewById(R.id.btnAdd);
@@ -74,24 +75,27 @@ OpenActEvInfo();
 cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
     @Override
     public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-        String honap;
+        String honap;//naptár adat váltás
         if((month+1)<10)   honap =("0"+(month+1));
         else honap = String.valueOf(month+1);
-        datum = year+"-"+honap+"-"+dayOfMonth;
+        String nap;
+        if(dayOfMonth<10)   nap =("0"+dayOfMonth);
+        else nap = String.valueOf(dayOfMonth);
+        datum = year+"-"+honap+"-"+nap;
         eventek.clear();
         lv.setAdapter(null);
         viewData();
     }
 });
 
-
+        //Belepes();
     }
 
-    private void viewData() {
+    private void viewData() {// naptár adat betöltés
         Cursor kurzor = db.AdatBetolt(datum);
         if(kurzor.getCount()==0){
 
-            Toast.makeText(this,String.valueOf(belepve),Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this,"nincs adat",Toast.LENGTH_SHORT).show();
         }
         else {
             while (kurzor.moveToNext()) {
@@ -113,7 +117,8 @@ lv.setAdapter(adapter);
     private void openAct2() {
         Intent intent = new Intent(this,Hozzaad.class);
         intent.putExtra("Naptar",datum);
-        intent.putExtra("AlarmID",alarmID);
+        //intent.putExtra("AlarmID",alarmID);
+
         alarmID = alarmID + 1;
         startActivity(intent);
 
@@ -129,7 +134,6 @@ private void Belepes()
     {
 
         Intent intent = new Intent(this,Login.class);
-
         startActivity(intent);
     }
 
@@ -138,6 +142,7 @@ private void Belepes()
         belepve = false;
         Belepes();
     }
+
 
 
 }

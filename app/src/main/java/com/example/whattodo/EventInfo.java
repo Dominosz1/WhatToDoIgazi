@@ -2,6 +2,9 @@ package com.example.whattodo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,13 +17,13 @@ import android.widget.Toast;
 
 public class EventInfo extends AppCompatActivity {
     private DatabaseHelper db;
-
+    private AlarmManager alarmManager;
     private TextView tv;
     private TextView tv2;
     private TextView tv3;
     private TextView tv4;
     private EditText et;
-
+    private int alarmAZ;
     private Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ viewData();
                 tv3.setText(kurzor.getString(3));
                 tv4.setText(kurzor.getString(4));
                 et.setText(kurzor.getString(5));
+                alarmAZ = kurzor.getInt(6);
             }
 
         }
@@ -55,9 +59,16 @@ viewData();
     }
     public void Torol(View view){
 db.Delete(getIntent().getExtras().getInt("ID"));
-        Intent intent = new Intent(this,MainActivity.class);
+        if(alarmManager == null) {
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        }
+        Intent intent = new Intent(getApplicationContext(),Alert.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),alarmAZ,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
+        Intent intenttovabb = new Intent(this,MainActivity.class);
 
 
-        startActivity(intent);
+        startActivity(intenttovabb);
     }
 }
