@@ -46,6 +46,7 @@ public class Hozzaad extends AppCompatActivity implements TimePickerDialog.OnTim
         editText5 = findViewById(R.id.editText5);
         editText2.setText(getIntent().getExtras().getString("Naptar"));
         editText3.setText(currentTime());
+        editText2.setEnabled(false);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Login extends AppCompatActivity {
 private UserDatabaseHelper db;
-private ArrayList<String> Emailek;
+public static ArrayList<String> Emailek;
 private ArrayList<String> Jelszavak;
 private EditText Email;
 private EditText Jelszo;
@@ -27,6 +27,7 @@ private EditText Jelszo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        belep();
         setContentView(R.layout.activity_login);
         Email = findViewById(R.id.editText7);
         Jelszo = findViewById(R.id.editText8);
@@ -68,5 +69,12 @@ private EditText Jelszo;
         }
         else if(!Emailek.contains(Email.getText().toString())) Toast.makeText(this,"Hibás bejelentkezés",Toast.LENGTH_SHORT).show();
     }
+    }
+    private void belep()
+    {
+        if(MainActivity.belepve == true){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
     }
 }

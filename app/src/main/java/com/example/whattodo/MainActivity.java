@@ -88,7 +88,7 @@ cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
     }
 });
 
-        //Belepes();
+        Belepes();
     }
 
     private void viewData() {// naptár adat betöltés

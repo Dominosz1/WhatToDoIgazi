@@ -20,4 +20,7 @@
     <string name="action_reply">Reply</string>
     <string name="rtes_t_s_id">Értesítés idő</string>
     <string name="egy_b_info">Egyéb info</string>
+    <string name="kilepes">Kilepes</string>
+    <string name="n_v">Név</string>
+    <string name="_2000_01_01">2000.01.01.</string>
 </resources>
